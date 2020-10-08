@@ -20,7 +20,7 @@
 
 const NUM_CATEGORIES = 6;
 const NUM_QUESTIONS_PER_CAT = 5;
-const TOTAL_NUM_CATEGORIES_FROM_RESOURSE =  18413;
+const TOTAL_NUM_CATEGORIES_FROM_RESOURSE = 18413;
 
 let categories = [];
 
@@ -30,7 +30,7 @@ let categories = [];
  * Returns array of category ids
  */
 async function getCategoryIds() {
-    let randomCatIds = [];    
+    let randomCatIds = [];
     while (randomCatIds.length < NUM_CATEGORIES) {
         let randomIndex = getRandomNum(TOTAL_NUM_CATEGORIES_FROM_RESOURSE - 1);
         let cat = await axios.get(
@@ -126,6 +126,7 @@ async function fillTable() {
     await makeCategories();
     fillTableHead();
     fillTableBody();
+    //don't put the eventListener inside here, will add multiple listener, conflict!
 }
 
 //======================================================
@@ -155,14 +156,14 @@ function fillTableBody() {
  * */
 
 function handleClick(evt) {
-    let $clickedTd = $(evt.target).closest("td");
+    let $clickedTd = $(evt.target).closest("td"); 
     let clickedID = $clickedTd.attr("id");
-    let clueForClickedTd = categories[clickedID[2]].clues[clickedID[0]]; 
+    let clueForClickedTd = categories[clickedID[2]].clues[clickedID[0]];
     //e.g. {question: "2+2", answer: 4, showing: null}
     if (clueForClickedTd.showing === null) {
         $clickedTd.text(clueForClickedTd.question);
         clueForClickedTd.showing = "question";
-    } 
+    }
     else if (clueForClickedTd.showing === "question") {
         $clickedTd.text(clueForClickedTd.answer);
         clueForClickedTd.showing = "answer";
@@ -222,11 +223,10 @@ async function setupAndStart() {
 $("#startBtn").on("click", async function () {
     showLoadingView();
     await setupAndStart();
-    hideLoadingView(); 
+    hideLoadingView();
 });
 
 
 /** On page load, add event handler for clicking clues */
 $("#tbody").on("click", "td", handleClick);
-
 

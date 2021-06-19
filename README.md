@@ -2,7 +2,7 @@
 A front end app: Interactive game of Jeopardy! 
 
 ### Deployed App Link
-https://baysharing.surge.sh/
+https://js-jeopardy.netlify.app/
 
 ### Tech Stack 
 
